@@ -1,0 +1,31 @@
+<app-menu></app-menu>
+
+<main>
+  <div class="contenedor-principal">
+    <section *ngIf="nombreCliente" class="bienvenida">
+      <h2>¡Bienvenido de nuevo, {{ nombreCliente }}!</h2>
+      <p>Nos alegra verte de nuevo en Ferretería Electro Atlántida.</p>
+    </section>
+
+    <section class="contenido">
+      <div class="productos-container">
+        <div *ngFor="let producto of productos" class="producto-card">
+          <img [src]="producto.imagen" alt="{{ producto.nombre_Producto }}" class="producto-imagen"/>
+          <h2>{{ producto.nombre_Producto }}</h2>
+          <p>Precio: ₡{{ producto.precio }}</p>
+          <button (click)="agregarAlCarrito(producto)">Agregar al Carrito</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div *ngIf="mostrarModal" class="modal">
+    <div class="modal-content">
+      <span (click)="cerrarModal()" class="close">&times;</span>
+      <p>{{ productoAgregado?.nombre_Producto }} ha sido agregado al carrito.</p>
+      <div class="check-icon">
+        <i class="fas fa-check-circle" style="color: green; font-size: 40px;"></i>
+      </div> 
+    </div>
+  </div>
+</main>

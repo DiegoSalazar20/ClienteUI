@@ -1,0 +1,209 @@
+.menu-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f7f8c9;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.menu-principal h1 {
+  margin: 0 0 5px 0;
+  font-size: 1.5rem;
+  color: #3b260d;
+}
+
+.menu-principal .botones {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-principal .botones li {
+  margin: 0;
+}
+
+.menu-principal .botones button {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  background-color: #d1b921;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-principal .botones button:hover {
+  background-color: #b4931a;
+}
+
+.menu-principal .botones button i {
+  margin-right: 5px;
+}
+
+.modal-detalles {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-detalles.show {
+  display: flex;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.productos-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.producto-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.producto-detalle img {
+  max-width: 40px;
+  max-height: 40px;
+  object-fit: contain;
+}
+
+.tabla-pedidos {
+  width: 80%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.tabla-pedidos th,
+.tabla-pedidos td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.tabla-pedidos th {
+  background-color: #f7f8c9;
+  color: #3b260d;
+}
+
+.tabla-pedidos td {
+  button {
+    background-color: #d1b921;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+
+  button:hover {
+    background-color: #b4931a;
+  }
+}
+
+.tabla-pedidos img {
+  width: 50px;
+  height: auto;
+}
+
+p {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #3b260d;
+}
+
+.modal {
+  display: block; // Asegúrate de que el modal sea visible
+  position: fixed;
+  z-index: 1050; // Asegúrate de que el modal esté por encima de otros elementos
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; // Permitir desplazamiento si el contenido es grande
+  background-color: rgba(0, 0, 0, 0.5); // Fondo semi-transparente
+
+  .modal-dialog {
+    position: relative;
+    margin: 10% auto; // Centrar el modal verticalmente
+    max-width: 600px; // Ancho máximo del modal
+  }
+
+  .modal-content {
+    background-color: white; // Fondo blanco para el contenido del modal
+    border: none; // Sin borde
+    border-radius: 5px; // Bordes redondeados
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); // Sombra para dar profundidad
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #ddd; // Línea en la parte inferior
+    padding: 10px 15px; // Espaciado
+  }
+
+  .modal-footer {
+    border-top: 1px solid #ddd; // Línea en la parte superior
+    padding: 10px 15px; // Espaciado
+  }
+}
+
+.container {
+  display: flex; /* Usar Flexbox */
+  flex-direction: column; /* Colocar los elementos en columnas */
+  align-items: center; /* Centrar horizontalmente */
+}
+
+.tabla-pedidos {
+  width: 80%; /* O el ancho que prefieras */
+  border-collapse: collapse;
+  margin-top: 20px; /* Margen superior para separación */
+  text-align: center;
+}
+
+.tabla-pedidos th,
+.tabla-pedidos td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.tabla-pedidos th {
+  background-color: #f7f8c9;
+  color: #3b260d;
+}
+
+/* Agrega esta clase para centrar la tabla verticalmente si es necesario */
+.centrar-tabla {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  width: 100%; /* Asegurarse de que ocupe todo el ancho */
+}

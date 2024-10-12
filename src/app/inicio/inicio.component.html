@@ -1,0 +1,18 @@
+<div class="fondo">
+  <div class="cuadro-inicio-sesion">
+    <h2>Iniciar Sesión</h2>
+    <form (submit)="iniciarSesion()">
+      <input type="text" placeholder="Correo" required [(ngModel)]="correo" name="correo" />
+      <input type="password" placeholder="Contraseña" required [(ngModel)]="contrasenia" name="contrasenia" />
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+    <div class="registro-link">
+    <p>¿No tienes una cuenta? <a href="#" (click)="redirigir('/registro'); $event.preventDefault();">Regístrate aquí</a></p>
+  </div>
+
+  <div class="productos-link">
+    <p>¿Solo deseas ver los productos? <a href="#" (click)="redirigir('/menuprincipal'); $event.preventDefault();">Míralos aquí</a></p>
+  </div>
+  </div>
+  
+</div>

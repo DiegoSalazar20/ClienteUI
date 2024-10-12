@@ -1,0 +1,63 @@
+<header>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <nav class="menu-principal">
+    <h1>Ferretería Electro Atlántida</h1>
+    <ul class="botones">
+      <li><button (click)="redirigir('/menuprincipal')">Ver productos</button></li>
+      <li *ngIf="estaAutenticado">
+        <button (click)="redirigir('/actualizardatos')">Actualizar datos</button>
+      </li>
+      <li *ngIf="estaAutenticado"><button (click)="redirigir('/mispedidos')">Mis Pedidos</button></li>
+      <li>
+        
+        <button (click)="estaAutenticado ? cerrarSesion('/menuprincipal') : redirigir('/inicio')" class="btn-sesion">
+          <i class="fas" [ngClass]="estaAutenticado ? 'fa-sign-out-alt' : 'fa-sign-in-alt'"></i>
+          {{ estaAutenticado ? 'Cerrar Sesión' : 'Iniciar Sesión' }}
+        </button>
+      </li>
+      <li><button (click)="abrirCarrito()"><i class="fas fa-shopping-cart"></i> Ver Carrito</button></li>
+    </ul>
+  </nav>
+</header>
+
+<div *ngIf="mostrarCarrito" class="modal-carrito show">
+  <div class="modal-content">
+    <h2>Carrito</h2>
+    <table class="tabla-carrito">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of detallesCarrito">
+          <td>
+            <img [src]="item.producto.imagen" alt="{{ item.producto.nombre_Producto }}" class="imagen-producto" />
+          </td>
+          <td>{{ item.producto.nombre_Producto }}</td>
+          <td>₡{{ item.producto.precio }}</td>
+          <td>
+            <button (click)="disminuirCantidad(item)">-</button>
+            {{ item.cantidad }}
+            <button (click)="aumentarCantidad(item)">+</button>
+          </td>
+          <td>
+            <button (click)="eliminarDelCarrito(item)">
+              <i class="fas fa-trash-alt" style="color: red;"></i> 
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="total">
+      <p>Total: ₡{{ calcularTotal() }}</p>
+      <button (click)="confirmarPedido()">Confirmar Pedido</button>
+      <button (click)="cerrarCarrito()">Cerrar Carrito</button>
+    </div>
+  </div>
+</div>

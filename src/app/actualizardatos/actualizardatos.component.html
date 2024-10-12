@@ -1,0 +1,25 @@
+<app-menu></app-menu>
+
+<div class="fondo">
+  <div class="cuadro-actualizar">
+    <h2>Actualizar Datos</h2>
+
+    <form (ngSubmit)="actualizarDatos()">
+      <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required />
+      <input type="text" [(ngModel)]="apellidos" name="apellidos" placeholder="Apellidos" required />
+      <input type="text" [(ngModel)]="direccion" name="direccion" placeholder="Dirección" required />
+      <input type="text" [(ngModel)]="telefono" name="telefono" placeholder="Teléfono" required />
+      <input type="email" [(ngModel)]="correo" name="correo" placeholder="Correo" required />
+
+      <button type="submit">Actualizar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal de Confirmación -->
+<div *ngIf="mostrarModal" class="modal">
+  <div class="modal-content">
+    <span (click)="cerrarModal()" class="close">&times;</span>
+    <p>Datos actualizados exitosamente!</p>
+  </div>
+</div>
