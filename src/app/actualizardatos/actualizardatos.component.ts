@@ -41,6 +41,23 @@ export class ActualizarDatosComponent implements OnInit {
   
   }
 
+  validarCampos(): boolean {
+    const camposFaltantes: string[] = [];
+
+    if (this.nombre.trim() === '') camposFaltantes.push('Nombre');
+    if (this.apellidos.trim() === '') camposFaltantes.push('Apellidos');
+    if (this.direccion.trim() === '') camposFaltantes.push('Dirección');
+    if (this.telefono.trim() === '') camposFaltantes.push('Teléfono');
+    if (this.correo.trim() === '') camposFaltantes.push('Correo electrónico');
+  
+    if (camposFaltantes.length > 0) {
+      alert('Faltan los siguientes datos por llenar: ' + camposFaltantes.join(', '));
+      return false;
+    }
+  
+    return true;
+  }
+
   cargarDatos(cedula: string): void {
     this.http.get<any[]>(`${this.apiUrlBuscar}?cedula=${cedula}`).subscribe(
       response => {
@@ -64,6 +81,11 @@ export class ActualizarDatosComponent implements OnInit {
   }
 
   actualizarDatos(): void {
+
+    if(!this.validarCampos()){
+      return;
+    }
+
     const cliente = {
       idCliente: this.idCliente,
       cedula: this.cedula,

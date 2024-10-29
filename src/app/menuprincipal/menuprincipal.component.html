@@ -13,7 +13,7 @@
           <img [src]="producto.imagen" alt="{{ producto.nombre_Producto }}" class="producto-imagen"/>
           <h2>{{ producto.nombre_Producto }}</h2>
           <p>Precio: ₡{{ producto.precio }}</p>
-          <button (click)="agregarAlCarrito(producto)">Agregar al Carrito</button>
+          <button (click)="agregarAlCarrito(producto)" class="btn-agregar-carrito">Agregar al Carrito</button>
         </div>
       </div>
     </section>

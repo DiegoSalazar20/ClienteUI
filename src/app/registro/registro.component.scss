@@ -1,99 +1,128 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.menu-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f7f8c9;
+  padding: 10px 20px; 
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; 
+}
+
+.menu-principal h1 {
+  margin: 0 0 5px 0; 
+  font-size: 1.5rem; 
+  color: #3b260d;
+}
+
+.menu-principal .botones {
+  display: flex;
+  gap: 10px; 
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-principal .botones li {
+  margin: 0;
+}
+
+.menu-principal .botones button {
+  padding: 8px 15px; 
+  font-size: 0.9rem; 
+  background-color: #d1b921;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-principal .botones button:hover {
+  background-color: #b4931a;
+}
+
+.fondo {
+  height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, rgba(255,222,33,1) 35%, rgba(245,178,31,1) 63%, rgba(239,151,30,1) 80%, rgba(235,135,29,1) 90%);
+}
+
+.cuadro-registro {
+  background-color: white;
+  padding: 40px; 
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+  position: relative;
+  z-index: 1; 
+}
+
+.cuadro-registro:hover {
+  transform: scale(1.02);
+}
+
+h2 {
+  margin-bottom: 20px; 
+  color: #67481c;
+  font-size: 24px; 
+  letter-spacing: 1px;
+}
+
+input {
+  width: 100%;
+  padding: 12px; 
+  margin-bottom: 15px; 
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #d1b921; 
+    box-shadow: 0 0 5px rgba(209, 185, 33, 0.5);
   }
-  
-  .menu-principal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f7f8c9;
-    padding: 10px 20px; 
-    position: fixed;
-    top: 0;
-    width: 100%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000; 
-  }
-  
-  .menu-principal h1 {
-    margin: 0 0 5px 0; 
-    font-size: 1.5rem; 
-    color: #3b260d;
-  }
-  
-  .menu-principal .botones {
-    display: flex;
-    gap: 10px; 
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .menu-principal .botones li {
-    margin: 0;
-  }
-  
-  .menu-principal .botones button {
-    padding: 8px 15px; 
-    font-size: 0.9rem; 
+}
+
+button {
+  width: 100%;
+  padding: 12px; 
+  background-color: #e0cf26;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+
+  &:hover {
     background-color: #d1b921;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    transform: scale(1.05);
   }
-  
-  .menu-principal .botones button:hover {
-    background-color: #b4931a;
-  }
-  
-  .fondo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #fcfcea, #d1b921);
-    min-height: 100vh; 
-    padding-top: 70px; 
-  }
-  
-  .cuadro-registro {
-    background-color: white;
-    padding: 30px; 
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 300px; 
-    margin-top: -100px;
-    h2 {
-      margin-bottom: 15px; 
-      color: #67481c;
-    }
-  
-    input {
-      width: 100%;
-      padding: 8px; 
-      margin-bottom: 10px; 
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 14px; 
-    }
-  
-    button {
-      width: 100%;
-      padding: 8px; 
-      background-color: #e0cf26;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px; 
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-  
-    button:hover {
-      background-color: #d1b921;
-    }
-  }
-  
+}
+
+.mensaje-error {
+  color: red;
+  margin-top: 10px; 
+}
+
+.mensaje-info {
+  margin-top: 20px; 
+  font-size: 14px; 
+}
+
+.mensaje-info a {
+  color: #d1b921; 
+  text-decoration: underline; 
+}

@@ -48,6 +48,22 @@
   border-radius: 5px;
 }
 
+.btn-agregar-carrito {
+  background-color: #d1b921; 
+  border: none; 
+  padding: 10px 15px; 
+  color: white; 
+  cursor: pointer; 
+  border-radius: 5px; 
+  margin-top: 10px; 
+  transition: background-color 0.3s; 
+}
+
+.btn-agregar-carrito:hover {
+  background-color: #e0cf26 !important;
+    transform: scale(1.05); 
+}
+
 
 .modal {
   display: flex;
@@ -90,3 +106,5 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+

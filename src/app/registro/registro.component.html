@@ -2,7 +2,7 @@
   <div class="cuadro-registro">
     <h2>Registro de Usuario</h2>
     <form (ngSubmit)="registrarCliente()">
-      <input type="text" [(ngModel)]="cedula" name="cedula" placeholder="Cédula" required />
+      <input type="text" [(ngModel)]="cedula" (ngModelChange)="formatearCedula()" maxlength="12" name="cedula" placeholder="Cédula" required />
       <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required />
       <input type="text" [(ngModel)]="apellidos" name="apellidos" placeholder="Apellidos" required />
       <input type="text" [(ngModel)]="direccion" name="direccion" placeholder="Dirección" required />

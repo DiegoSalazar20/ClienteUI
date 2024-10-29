@@ -9,6 +9,7 @@ interface Producto {
   nombre_Producto: string;
   precio: number;
   imagen: string;
+  estado: boolean;
 }
 
 @Component({
@@ -36,7 +37,7 @@ export class MenuPrincipalComponent implements OnInit {
     this.http.get<Producto[]>('https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Producto')
       .subscribe({
         next: (data) => {
-          this.productos = data;
+          this.productos = data.filter(producto => producto.estado);
         },
         error: (err) => {
           console.error('Error al cargar los productos:', err);

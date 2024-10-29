@@ -2,8 +2,8 @@
 
 <main>
   <div class="container mt-4">
-    <h2>Mis Pedidos</h2>
-    <div class="centrar-tabla"> <!-- Agregar clase para centrar -->
+    <h2 style="margin-top: 100px;">Mis Pedidos</h2>
+    <div class="centrar-tabla">
       <table class="tabla-pedidos">
         <thead>
           <tr>
@@ -31,40 +31,40 @@
       </table>
     </div>
 
-    <div *ngIf="pedidoSeleccionado" class="modal" tabindex="-1" style="display: block;">
-      <div class="modal-dialog">
-        <div class="modal-content">
+    <div *ngIf="pedidoSeleccionado" class="modal" tabindex="-1" style="display: flex;">
+      <div class="modal-contenido">
           <div class="modal-header">
-            <h5 class="modal-title">Detalles del Pedido #{{ pedidoSeleccionado.IdPedido }}</h5>
-            <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+              <h5 class="modal-title">Detalles del Pedido #{{ pedidoSeleccionado.IdPedido }}</h5>
+              
           </div>
           <div class="modal-body">
-            <table class="tabla-pedidos">
-              <thead>
-                <tr>
-                  <th>Imagen</th>
-                  <th>Nombre del Producto</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let producto of pedidoSeleccionado.Productos">
-                  <td>
-                    <img [src]="producto.Imagen" alt="{{ producto.Nombre_Producto }}" style="width: 50px; height: 50px;">
-                  </td>
-                  <td>{{ producto.Nombre_Producto }}</td>
-                  <td>{{ producto.Cantidad }}</td>
-                  <td>₡{{ producto.Precio }}</td>
-                </tr>
-              </tbody>
-            </table>
+              <table class="tabla-pedidos">
+                  <thead>
+                      <tr>
+                          <th>Imagen</th>
+                          <th>Nombre del Producto</th>
+                          <th>Cantidad</th>
+                          <th>Precio</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let producto of pedidoSeleccionado.Productos">
+                          <td>
+                              <img [src]="producto.Imagen" alt="{{ producto.Nombre_Producto }}" style="width: 50px; height: 50px;">
+                          </td>
+                          <td>{{ producto.Nombre_Producto }}</td>
+                          <td>{{ producto.Cantidad }}</td>
+                          <td>₡{{ producto.Precio }}</td>
+                      </tr>
+                  </tbody>
+              </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+              <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar ventana</button>
           </div>
-        </div>
       </div>
-    </div>
   </div>
+    
+</div>
+
 </main>

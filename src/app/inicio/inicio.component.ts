@@ -21,17 +21,19 @@ export class InicioComponent {
 
     const cifrada = await this.hashContrasena(this.contrasenia);
     const url = `https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Cliente/IniciarSesion?correo=${this.correo}&contrasenia=${cifrada}`;
-
     this.http.get<any>(url).subscribe(
       response => {
         if (response && response.idCliente) {
-          localStorage.setItem('idCliente', response.idCliente.toString());
-          localStorage.setItem('Cedula', response.cedula.toString());
-          localStorage.setItem('Nombre', response.nombre.toString());
-          alert('Inicio de sesión exitoso');
-          this.router.navigate(['/menuprincipal']); 
+          if (response.estado) {
+            localStorage.setItem('idCliente', response.idCliente.toString());
+            localStorage.setItem('Cedula', response.cedula.toString());
+            localStorage.setItem('Nombre', response.nombre.toString());
+            this.router.navigate(['/menuprincipal']);
+          } else {
+            alert('Cliente deshabilitado.');
+          }
         } else {
-          alert('Credenciales inválidas'); 
+          alert('Correo o contraseña incorrecta');
         }
       },
       error => {

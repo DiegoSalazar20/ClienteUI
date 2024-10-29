@@ -1,47 +1,78 @@
 .fondo {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #fcfcea, #d1b921);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, rgba(255,222,33,1) 35%, rgba(245,178,31,1) 63%, rgba(239,151,30,1) 80%, rgba(235,135,29,1) 90%);
+  font-family: 'Arial', sans-serif;
+}
+
+.cuadro-inicio-sesion {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+  position: relative;
+  z-index: 1;
+}
+
+.cuadro-inicio-sesion:hover {
+  transform: scale(1.02);
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #67481c;
+  font-size: 24px; 
+  letter-spacing: 1px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+      outline: none;
+      border-color: #d1b921; 
+      box-shadow: 0 0 5px rgba(209, 185, 33, 0.5);
   }
-  
-  .cuadro-inicio-sesion {
-    background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 300px;
-  
-    h2 {
-      margin-bottom: 20px;
-      color: #67481c;
-    }
-  
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-  
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #e0cf26;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-  
-      &:hover {
-        background-color: #d1b921;
-      }
-    }
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #e0cf26;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+
+  &:hover {
+      background-color: #d1b921;
+      transform: scale(1.05);
   }
-  
+}
+
+.mensaje-error {
+  color: red;
+  margin-top: 10px; 
+}
+
+.mensaje-info {
+  margin-top: 20px; 
+  font-size: 14px; 
+}
+
+.mensaje-info a {
+  color: #d1b921; 
+  text-decoration: underline; 
+}

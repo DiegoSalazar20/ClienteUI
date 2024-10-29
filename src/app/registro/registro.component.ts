@@ -26,6 +26,11 @@ export class RegistroComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   async registrarCliente() {
+
+    if(!this.validarCampos()){
+      return;
+    }
+
     if (this.contrasena !== this.contrasena2) {
       alert('Las contraseñas no coinciden');
       return;
@@ -53,7 +58,7 @@ export class RegistroComponent {
             localStorage.setItem('correo', this.correo);
 
             alert('Cliente registrado correctamente');
-            this.router.navigate(['/menuprincipal']);
+            this.router.navigate(['/inicio']);
           } else {
             alert('Error al registrar el cliente');
           }
@@ -63,6 +68,37 @@ export class RegistroComponent {
           alert('Ocurrió un error al registrar el cliente');
         }
       });
+  }
+
+  formatearCedula(): void {
+    let valor = this.cedula.replace(/\D/g, '');
+
+    if (valor.length > 2 && valor.length <= 6) {
+      valor = valor.slice(0, 2) + '-' + valor.slice(2);
+    } else if (valor.length > 6) {
+      valor = valor.slice(0, 2) + '-' + valor.slice(2, 6) + '-' + valor.slice(6, 10);
+    }
+    this.cedula = valor.slice(0, 12);
+  }
+
+  validarCampos(): boolean {
+    const camposFaltantes: string[] = [];
+  
+    if (this.cedula.trim() === '') camposFaltantes.push('Cédula');
+    if (this.nombre.trim() === '') camposFaltantes.push('Nombre');
+    if (this.apellidos.trim() === '') camposFaltantes.push('Apellidos');
+    if (this.direccion.trim() === '') camposFaltantes.push('Direccion');
+    if (this.telefono.trim() === '') camposFaltantes.push('Teléfono');
+    if (this.correo.trim() === '') camposFaltantes.push('Correo electrónico');
+    if (this.contrasena.trim() === '') camposFaltantes.push('Contraseña');
+    if (this.contrasena2.trim() === '') camposFaltantes.push('Contraseña 2');
+  
+    if (camposFaltantes.length > 0) {
+      alert('Faltan los siguientes datos por llenar: ' + camposFaltantes.join(', '));
+      return false;
+    }
+  
+    return true;
   }
 
   async hashContrasena(contrasena: string): Promise<string> {

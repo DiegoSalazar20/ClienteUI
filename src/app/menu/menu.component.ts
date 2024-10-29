@@ -51,11 +51,11 @@ export class MenuComponent {
       localStorage.removeItem('Cedula');
       localStorage.removeItem('Nombre');
     }
-    this.estaAutenticado = false; // Actualiza el estado de autenticación
+    this.estaAutenticado = false;
     if (this.router.url===ruta){
       window.location.reload();
     }else{
-    this.router.navigate(['/menuprincipal']); // Redirige al menú principal
+    this.router.navigate(['/menuprincipal']); 
     }
   }
 
@@ -169,7 +169,7 @@ export class MenuComponent {
   quitarDelCarrito(item: ItemCarrito): void {
     const index = this.detallesCarrito.findIndex(p => p.idProducto === item.idProducto);
     if (index > -1) {
-      this.detallesCarrito.splice(index, 1); // Eliminar el producto del carrito
+      this.detallesCarrito.splice(index, 1); 
     }
   }
 

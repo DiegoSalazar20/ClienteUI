@@ -1,49 +1,55 @@
 .fondo {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #fcfcea, #d1b921);
-  }
-  
-  .cuadro-actualizar {
-    background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 350px;
-  
-    h2 {
-      margin-bottom: 20px;
-      color: #67481c;
-    }
-  
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-  
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #e0cf26;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-  
-      &:hover {
-        background-color: #d1b921;
-      }
-    }
-  }
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.cuadro-registrar {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.cuadro-registrar h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cuadro-registrar form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cuadro-registrar label {
+  font-size: 14px;
+  color: #333;
+}
+
+.cuadro-registrar input, 
+.cuadro-registrar select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.cuadro-registrar button {
+  background-color: #d1b921;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+.cuadro-registrar button:hover {
+  background-color: #b4931a;
+}
   
   .menu-principal {
     display: flex;
@@ -101,15 +107,15 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    background-color: rgba(0, 0, 0, 0.5); 
   }
   
   .modal-content {
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
-    border-radius: 8px; /* Bordes redondeados */
-    text-align: center; /* Centrar texto */
+    border-radius: 8px; 
+    text-align: center; 
   }
   
   .close {
@@ -125,4 +131,13 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  .botonAnimado:hover{
+    background-color: #e0cf26 !important;
+    transform: scale(1.02);
+}
+
+.botonAnimado.has-transition{
+    transition: transform 150ms ease-in-out 0;
+}
   
