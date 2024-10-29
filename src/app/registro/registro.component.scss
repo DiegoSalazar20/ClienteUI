@@ -59,13 +59,14 @@ body {
 
 .cuadro-registro {
   background-color: white;
-  padding: 40px; 
+  padding: 25px; 
   border-radius: 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   text-align: center;
   width: 400px;
   position: relative;
   z-index: 1; 
+  transition: transform 0.3s ease;
 }
 
 .cuadro-registro:hover {
@@ -80,7 +81,7 @@ h2 {
 }
 
 input {
-  width: 100%;
+  width: 90%;
   padding: 12px; 
   margin-bottom: 15px; 
   border: 1px solid #ddd;
