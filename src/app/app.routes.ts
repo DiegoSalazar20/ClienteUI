@@ -6,7 +6,7 @@ import { ActualizarDatosComponent } from './actualizardatos/actualizardatos.comp
 import { MispedidosComponent } from './mispedidos/mispedidos.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'menuprincipal', pathMatch: 'full' }, 
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' }, 
   { path: 'inicio', component: InicioComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'menuprincipal', component: MenuPrincipalComponent },

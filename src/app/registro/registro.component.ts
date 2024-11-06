@@ -22,6 +22,7 @@ export class RegistroComponent {
   correo: string = '';
   contrasena: string = '';
   contrasena2: string = '';
+  mensajeError: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -32,7 +33,8 @@ export class RegistroComponent {
     }
 
     if (this.contrasena !== this.contrasena2) {
-      alert('Las contraseñas no coinciden');
+      var mensaje='Las contraseñas no coinciden';
+      this.mensajeError=mensaje;
       return;
     }
 
@@ -94,7 +96,8 @@ export class RegistroComponent {
     if (this.contrasena2.trim() === '') camposFaltantes.push('Contraseña 2');
   
     if (camposFaltantes.length > 0) {
-      alert('Faltan los siguientes datos por llenar: ' + camposFaltantes.join(', '));
+      var mensaje =('Faltan los siguientes datos por llenar: ' + camposFaltantes.join(', '));
+      this.mensajeError=mensaje;
       return false;
     }
   

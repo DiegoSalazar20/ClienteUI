@@ -29,15 +29,15 @@ interface ItemCarrito {
 export class MenuComponent {
   mostrarCarrito: boolean = false;
   detallesCarrito: ItemCarrito[] = [];
-  estaAutenticado: boolean = false; // Nueva propiedad para determinar el estado de la sesión
+  estaAutenticado: boolean = false; 
 
   constructor(private router: Router, private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { 
-    this.verificarSesion(); // Verificamos si la sesión está activa al iniciar el componente
+    this.verificarSesion(); 
   }
 
   verificarSesion(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.estaAutenticado = !!localStorage.getItem('idCliente'); // Verifica si el cliente está autenticado solo en el navegador
+      this.estaAutenticado = !!localStorage.getItem('idCliente'); 
     }
   }
 
@@ -157,9 +157,13 @@ export class MenuComponent {
       next: (response) => {
         console.log('Producto eliminado:', response);
         this.quitarDelCarrito(item);
+
+          
+          setTimeout(() => {
+            alert(item.producto.nombre_Producto + ' ha sido eliminado correctamente');
+          }, 500);
       },
       error: (err) => {
-        console.error('Error al eliminar el producto:', err);
         alert('Ocurrió un error al eliminar el producto.');
       }
     });

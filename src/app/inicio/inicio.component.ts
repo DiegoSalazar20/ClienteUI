@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule  } from '@angular/common/http';
 import { Router } from '@angular/router'; 
 import { FormsModule } from '@angular/forms'; 
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [FormsModule, HttpClientModule], 
+  imports: [FormsModule, HttpClientModule, CommonModule], 
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.scss'] 
 })
@@ -14,11 +15,15 @@ export class InicioComponent {
   correo: string = '';
   contrasenia: string = '';
   cifrada: string ='';
+  mensajeError: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) {} 
 
   async iniciarSesion() {
-
+    this.mensajeError = null;
+    if(!this.validarCampos()){
+      return;
+    }
     const cifrada = await this.hashContrasena(this.contrasenia);
     const url = `https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Cliente/IniciarSesion?correo=${this.correo}&contrasenia=${cifrada}`;
     this.http.get<any>(url).subscribe(
@@ -32,15 +37,33 @@ export class InicioComponent {
           } else {
             alert('Cliente deshabilitado.');
           }
-        } else {
-          alert('Correo o contraseña incorrecta');
+        }  else {
+          this.mensajeError = 'Correo o contraseña incorrectas.';
         }
       },
       error => {
         console.error('Error al iniciar sesión', error);
-        alert('Ocurrió un error al iniciar sesión');
+        if (error.status === 401) {
+          this.mensajeError = 'Correo o contraseña incorrectos' 
+        } else {
+          this.mensajeError = 'Ocurrió un error al iniciar sesión'; 
+        }
       }
     );
+  }
+
+  validarCampos(): boolean {
+    const camposFaltantes: string[] = [];
+  
+    if (this.correo.trim() === '') camposFaltantes.push('Correo electrónico');
+    if (this.contrasenia.trim() === '') camposFaltantes.push('Contraseña');
+    if (camposFaltantes.length > 0) {
+      var mensaje=('Faltan los siguientes datos por llenar: ' + camposFaltantes.join(', '));
+      this.mensajeError=mensaje;
+      return false;
+    }
+  
+    return true;
   }
 
   async hashContrasena(contrasena: string): Promise<string> {

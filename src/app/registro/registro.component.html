@@ -15,5 +15,6 @@
     <div class="registro-link">
       <p>¿Ya tienes una cuenta? <a href="#" (click)="redirigir('/inicio'); $event.preventDefault();">Inicia sesión aquí</a></p>
     </div>
+    <div *ngIf="mensajeError" class="mensaje-error">{{ mensajeError }}</div>
   </div>
 </div>

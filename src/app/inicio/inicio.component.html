@@ -13,6 +13,7 @@
   <div class="productos-link">
     <p>¿Solo deseas ver los productos? <a href="#" (click)="redirigir('/menuprincipal'); $event.preventDefault();">Míralos aquí</a></p>
   </div>
+  <div *ngIf="mensajeError" class="mensaje-error">{{ mensajeError }}</div>
   </div>
   
 </div>
