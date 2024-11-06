@@ -84,7 +84,9 @@ export class RegistroComponent {
   }
 
   validarCampos(): boolean {
+    var resultado=true;
     const camposFaltantes: string[] = [];
+    const camposInvalidos: string[] = [];
   
     if (this.cedula.trim() === '') camposFaltantes.push('Cédula');
     if (this.nombre.trim() === '') camposFaltantes.push('Nombre');
@@ -94,14 +96,29 @@ export class RegistroComponent {
     if (this.correo.trim() === '') camposFaltantes.push('Correo electrónico');
     if (this.contrasena.trim() === '') camposFaltantes.push('Contraseña');
     if (this.contrasena2.trim() === '') camposFaltantes.push('Contraseña 2');
+
+    if (this.tieneNumerosOCaracteresEspeciales(this.nombre.trim())) camposInvalidos.push('Nombre');
+    if (this.tieneNumerosOCaracteresEspeciales(this.apellidos.trim())) camposInvalidos.push('Apellido');
+    if (this.tieneNumerosOCaracteresEspeciales(this.direccion.trim())) camposInvalidos.push('Dirección');
   
     if (camposFaltantes.length > 0) {
       var mensaje =('Faltan los siguientes datos por llenar: ' + camposFaltantes.join(', '));
       this.mensajeError=mensaje;
-      return false;
+      resultado=false;
+    }
+
+    if (camposInvalidos.length > 0) {
+      var mensaje =('Los siguientes campos tienen datos inválidos: ' + camposInvalidos.join(', '));
+      this.mensajeError=mensaje;
+      resultado=false;
     }
   
-    return true;
+    return resultado;
+  }
+
+  tieneNumerosOCaracteresEspeciales(input: string): boolean{
+    const regex = /[^a-zA-Z\s]/;
+    return regex.test(input);
   }
 
   async hashContrasena(contrasena: string): Promise<string> {
