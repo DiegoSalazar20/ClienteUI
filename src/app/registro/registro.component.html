@@ -6,7 +6,7 @@
       <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required />
       <input type="text" [(ngModel)]="apellidos" name="apellidos" placeholder="Apellidos" required />
       <input type="text" [(ngModel)]="direccion" name="direccion" placeholder="Dirección" required />
-      <input type="text" [(ngModel)]="telefono" name="telefono" placeholder="Teléfono" required />
+      <input type="text" [(ngModel)]="telefono" name="telefono" (ngModelChange)="formatearTelefono()" maxlength="9" placeholder="Teléfono" required />
       <input type="email" [(ngModel)]="correo" name="correo" placeholder="Correo" required />
       <input type="password" [(ngModel)]="contrasena" name="contrasena" placeholder="Contraseña" required />
       <input type="password" [(ngModel)]="contrasena2" name="repetirContrasena" placeholder="Repetir Contraseña" required />
@@ -16,5 +16,13 @@
       <p>¿Ya tienes una cuenta? <a href="#" (click)="redirigir('/inicio'); $event.preventDefault();">Inicia sesión aquí</a></p>
     </div>
     <div *ngIf="mensajeError" class="mensaje-error">{{ mensajeError }}</div>
+  </div>
+</div>
+
+<div *ngIf="mostrarMensaje" class="modal modal-exito">
+  <div class="modal-content">
+    <h2><i class="fas fa-check-circle"></i> Éxito</h2>
+    <h6>{{ mensaje }}</h6> 
+    <span (click)="cerrarModalExito()" class="close">&times;</span>
   </div>
 </div>

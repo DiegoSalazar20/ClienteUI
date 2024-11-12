@@ -63,3 +63,47 @@
   </div>
 </div>
 
+<div *ngIf="mostrarModalEliminar" class="modal-carrito show modal-confirmacion">
+  <div class="modal-content">
+    <h2><i class="fas fa-question-circle"></i> Confirmar eliminación</h2>
+    <p>¿Está seguro que desea eliminar este producto del carrito?</p>
+    <div class="total">
+      <button (click)="eliminarProducto()">Sí</button>
+      <button (click)="cancelarEliminacion()">No</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="mostrarMensaje" class="modal-carrito show modal-exito">
+  <div class="modal-content">
+    <h2><i class="fas fa-check-circle"></i> Éxito</h2>
+    <h6>{{ mensaje }}</h6> 
+    <span (click)="cerrarModalExito()" class="close">&times;</span>
+  </div>
+</div>
+
+
+
+<div *ngIf="mostrarErrorModal" class="modal-carrito show modal-error">
+  <div class="modal-content">
+    <h2><i class="fas fa-exclamation-circle"></i> Error</h2> 
+    <p>{{ mensajeError }}</p> 
+    <span (click)="cerrarModalError()" class="close">&times;</span>
+  </div>
+</div>
+
+
+
+
+
+<div *ngIf="mostrarModalConfirmacion" class="modal-carrito show">
+  <div class="modal-content">
+    <h2>Confirmar Pedido</h2>
+    <p>¿Estás seguro de que deseas confirmar el pedido?</p>
+    <div class="total">
+      <button (click)="confirmarPedidoDesdeModal()">Sí</button>
+      <button (click)="cancelarPedido()">No</button>
+    </div>
+  </div>
+</div>
+

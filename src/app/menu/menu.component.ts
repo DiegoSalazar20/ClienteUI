@@ -19,6 +19,11 @@ interface ItemCarrito {
   };
 }
 
+interface ProductoPedido {
+  idProducto: number;
+  cantidad: number;
+}
+
 @Component({
   selector: 'app-menu',
   standalone: true,
@@ -29,15 +34,61 @@ interface ItemCarrito {
 export class MenuComponent {
   mostrarCarrito: boolean = false;
   detallesCarrito: ItemCarrito[] = [];
-  estaAutenticado: boolean = false; 
+  estaAutenticado: boolean = false;
+  mostrarModalEliminar: boolean = false;
+  productoEliminar: ItemCarrito | null = null;
+  mostrarMensaje: boolean = false;
+  mensaje: string = '';
+  mostrarModalConfirmacion: boolean = false;
+  mostrarErrorModal: boolean = false;
+  mensajeError: string = '';
+
+  mensajeCancelado: String = '';
+
 
   constructor(private router: Router, private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { 
     this.verificarSesion(); 
   }
 
+  mostrarError(mensaje: string): void {
+    this.mensajeError = mensaje;
+    this.mostrarErrorModal = true;
+  }
+
+  cerrarModalError(): void {
+    this.mostrarErrorModal = false;
+  }
+  cerrarModalConfirmacion(): void {
+    this.mostrarModalConfirmacion = false; 
+  }
+
+  eliminarDelCarrito(item: ItemCarrito): void {
+    this.productoEliminar = item;
+    this.mostrarModalEliminar = true;
+  }
+  
+  cerrarModalEliminar(): void {
+    this.mostrarModalEliminar = false;
+    this.productoEliminar = null;
+  }
+
+  abrirCarrito(): void {
+    this.mostrarCarrito = true;
+    this.cargarCarrito();
+  }
+
+  cerrarCarrito(): void {
+    this.mostrarCarrito = false;
+  }
+
+  cerrarModalExito(): void {
+    this.mostrarMensaje= false;
+  }
+
+
   verificarSesion(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.estaAutenticado = !!localStorage.getItem('idCliente'); 
+      this.estaAutenticado = !!localStorage.getItem('idCliente');
     }
   }
 
@@ -52,24 +103,14 @@ export class MenuComponent {
       localStorage.removeItem('Nombre');
     }
     this.estaAutenticado = false;
-    if (this.router.url===ruta){
+    if (this.router.url === ruta) {
       window.location.reload();
-    }else{
-    this.router.navigate(['/menuprincipal']); 
+    } else {
+      this.router.navigate(['/menuprincipal']);
     }
   }
 
-  abrirCarrito(): void {
-    this.mostrarCarrito = true;
-    this.cargarCarrito();
-  }
-
-  cerrarCarrito(): void {
-    this.mostrarCarrito = false;
-  }
-
-
-
+  
   cargarCarrito(): void {
     const idCliente = localStorage.getItem('idCliente');
 
@@ -81,7 +122,6 @@ export class MenuComponent {
           const requests = data.map(item => {
             return this.buscarProducto(item.idProducto).then(producto => {
               if (producto && producto.length > 0) {
-
                 this.detallesCarrito.push({
                   idCliente: Number(idCliente),
                   idProducto: item.idProducto,
@@ -98,7 +138,7 @@ export class MenuComponent {
         },
         error: (err) => {
           console.error('Error al cargar el carrito:', err);
-          alert('Ocurrió un error al cargar el carrito.');
+          this.mostrarError('Hubo un problema al cargar el carrito.'); 
         }
       });
     } else {
@@ -106,18 +146,15 @@ export class MenuComponent {
     }
   }
 
-
   buscarProducto(idProducto: number): Promise<any> {
     const urlProducto = `https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Producto/buscarId/${idProducto}`;
-    return this.http.get<any[]>(urlProducto).toPromise(); // Convierte el Observable a Promise
+    return this.http.get<any[]>(urlProducto).toPromise();
   }
-
 
   aumentarCantidad(item: ItemCarrito): void {
     item.cantidad++;
     this.actualizarCantidad(item.idCliente, item.idProducto, 1);
   }
-
 
   disminuirCantidad(item: ItemCarrito): void {
     if (item.cantidad > 1) {
@@ -144,71 +181,104 @@ export class MenuComponent {
       },
       error: (err) => {
         console.error('Error al actualizar la cantidad:', err);
-        alert('Ocurrió un error al actualizar la cantidad.');
+        this.mostrarError('Hubo un problema al actualizar la cantidad.');  
       }
     });
   }
 
+  eliminarProducto(): void {
+    if (this.productoEliminar) {
+      const item = this.productoEliminar;
+      const urlEliminar = `https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Carrito/eliminar/${item.idCliente}/${item.idProducto}`;
 
-  eliminarDelCarrito(item: ItemCarrito): void {
-    const urlEliminar = `https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Carrito/eliminar/${item.idCliente}/${item.idProducto}`;
+      this.http.delete(urlEliminar).subscribe({
+        next: (response) => {
+          console.log('Producto eliminado:', response);
+          this.quitarDelCarrito(item);
 
-    this.http.delete(urlEliminar).subscribe({
-      next: (response) => {
-        console.log('Producto eliminado:', response);
-        this.quitarDelCarrito(item);
-
-          
+          this.mensaje = '¡Producto eliminado con éxito!';  
+          this.mostrarMensaje = true;
           setTimeout(() => {
-            alert(item.producto.nombre_Producto + ' ha sido eliminado correctamente');
-          }, 500);
-      },
-      error: (err) => {
-        alert('Ocurrió un error al eliminar el producto.');
-      }
-    });
+            this.cerrarModalExito();
+          }, 2000);
+        },
+        error: (err) => {
+          console.error('Error al eliminar el producto', err);
+          this.mostrarError('Hubo un problema al eliminar el producto del carrito.'); 
+        }
+      });
+    }
+    this.cerrarModalEliminar();
   }
 
+  cancelarEliminacion(): void {
+    this.mensaje = 'No se eliminó el producto. Acción cancelada.';
+    this.mostrarMensaje= true;
+  
+    this.cerrarModalEliminar();
+    setTimeout(() => {
+      this.cerrarModalExito();
+    }, 2000);
+  }
+
+  cancelarPedido(): void {
+    this.cerrarModalConfirmacion();
+    this.mensaje = 'No se realizó el pedido. Acción cancelada.';
+    this.mostrarMensaje= true;
+  
+    this.cerrarModalEliminar();
+    setTimeout(() => {
+      this.cerrarModalExito();
+    }, 2000);
+  }
 
   quitarDelCarrito(item: ItemCarrito): void {
     const index = this.detallesCarrito.findIndex(p => p.idProducto === item.idProducto);
     if (index > -1) {
-      this.detallesCarrito.splice(index, 1); 
+      this.detallesCarrito.splice(index, 1);
     }
   }
-
 
   calcularTotal(): number {
     return this.detallesCarrito.reduce((total, item) => total + (item.producto?.precio || 0) * item.cantidad, 0);
   }
 
-
   confirmarPedido(): void {
     const idCliente = localStorage.getItem('idCliente');
     if (!idCliente) {
-      alert('Error: No se encontró un idCliente');
+      this.mostrarError('Error, necesita iniciar sesión.'); 
       return;
     }
 
     if (this.detallesCarrito.length === 0) {
-      alert('No tienes productos en el carrito.');
+      this.mostrarError('No hay productos agregados');  
       return;
     }
-  
-    const confirmar = window.confirm('¿Estás seguro de que deseas confirmar el pedido?');
-    if (!confirmar) {
-      return; 
+
+    const stockValido = this.detallesCarrito.every(item => {
+      if (item.cantidad > item.producto.cantidad_Stock) {
+        this.mostrarError('No hay suficiente stock para el producto '+ item.producto.nombre_Producto); 
+        return false;
+      }
+      return true;
+    });
+
+    if (!stockValido) {
+      return;
     }
 
+    this.mostrarModalConfirmacion = true;
+  }
+
+  confirmarPedidoDesdeModal(): void {
+    const idCliente = localStorage.getItem('idCliente');
     const fechaActual = new Date();
     const fechaPedido = `${fechaActual.getDate().toString().padStart(2, '0')}/${(fechaActual.getMonth() + 1).toString().padStart(2, '0')}/${fechaActual.getFullYear()}`;
-
 
     const productos = this.detallesCarrito.map(item => ({
       idProducto: item.idProducto,
       cantidad: item.cantidad
     }));
-
 
     const pedido = {
       idPedido: 0,
@@ -219,36 +289,56 @@ export class MenuComponent {
       productos: productos
     };
 
-
     const urlPedido = 'https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Pedido/Registrar';
 
-
     this.http.post(urlPedido, pedido).subscribe({
-      next: (response) => {
-        alert('Pedido confirmado exitosamente!');
-
+      next: (response: any) => {
+        this.mensaje = '¡Pedido confirmado con éxito!';  
+        this.mostrarMensaje = true;
+        this.restarStockDeProductos(pedido);
+        setTimeout(() => {
+          this.cerrarModalExito();
+        }, 2000);
 
         const requests = this.detallesCarrito.map(item => {
-          const urlEliminar = `https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Carrito/eliminar/${idCliente}/${item.idProducto}`;
+          const urlEliminar = `https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Carrito/eliminar/${item.idCliente}/${item.idProducto}`;
           return this.http.delete(urlEliminar).toPromise();
         });
 
-
         Promise.all(requests).then(() => {
-          console.log('Productos eliminados del carrito');
           this.detallesCarrito = [];
-          this.cerrarCarrito();
-        }).catch(err => {
-          console.error('Error al eliminar productos del carrito:', err);
-          alert('Ocurrió un error al eliminar los productos del carrito.');
+        }).catch((err) => {
+          console.error('Error al vaciar el carrito:', err);
+          this.mostrarError('Ocurrió un error, vuelva a intentarlo'); 
         });
+
+        this.mostrarModalConfirmacion = false;
       },
       error: (err) => {
-        console.error('Error al confirmar el pedido:', err);
-        alert('Ocurrió un error al confirmar el pedido.');
+        this.mostrarModalConfirmacion = false;
+        console.error('Error al realizar el pedido:', err);
+        this.mostrarError('Hubo un problema al realizar el pedido'); 
       }
     });
   }
 
+  restarStockDeProductos(pedido: any): Promise<void> {
+    const promesas: Promise<any>[] = [];
+  
+    for (let producto of pedido.productos) {
+      const urlRestarStock = `https://sgfeapi-djdheubvcef3bha2.eastus-01.azurewebsites.net/api/Producto/restarstock?idProducto=${producto.idProducto}&cantidad=${producto.cantidad}`;
+      
+      promesas.push(this.http.put(urlRestarStock, {}).toPromise());
+    }
+    return Promise.all(promesas).then(() => {
+      console.log('Stock actualizado correctamente para todos los productos.');
+    }).catch((error) => {
+      console.error('Error al actualizar el stock:', error);
+      alert('Ocurrió un error al actualizar el stock. Inténtalo nuevamente.');
+    });
+  }
 
+  cancelarPedidoDesdeModal(): void {
+    this.mostrarModalConfirmacion = false;
+  }
 }

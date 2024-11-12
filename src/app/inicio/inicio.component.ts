@@ -44,7 +44,7 @@ export class InicioComponent {
       error => {
         console.error('Error al iniciar sesión', error);
         if (error.status === 401) {
-          this.mensajeError = 'Correo o contraseña incorrectos' 
+          this.mensajeError = 'Correo o contraseña incorrectas' 
         } else {
           this.mensajeError = 'Ocurrió un error al iniciar sesión'; 
         }

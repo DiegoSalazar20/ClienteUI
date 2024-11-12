@@ -24,47 +24,75 @@
               <button class="btn btn-primary" (click)="verDetallesPedido(pedido)">
                 Ver Detalles
               </button>
-              <button *ngIf="pedido.Estado_Pedido === 'Pendiente'" type="button" class="btn btn-danger" (click)="cancelarPedido(pedido.IdPedido)">Cancelar Pedido</button>
+              <button *ngIf="pedido.Estado_Pedido === 'Pendiente'" type="button" class="btn btn-danger" (click)="confirmarCancelacion(pedido.IdPedido)">Cancelar Pedido</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <div *ngIf="pedidoSeleccionado" class="modal" tabindex="-1" style="display: flex;">
-      <div class="modal-contenido">
-          <div class="modal-header">
-              <h5 class="modal-title">Detalles del Pedido #{{ pedidoSeleccionado.IdPedido }}</h5>
-              
-          </div>
-          <div class="modal-body">
-              <table class="tabla-pedidos">
-                  <thead>
-                      <tr>
-                          <th>Imagen</th>
-                          <th>Nombre del Producto</th>
-                          <th>Cantidad</th>
-                          <th>Precio</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let producto of pedidoSeleccionado.Productos">
-                          <td>
-                              <img [src]="producto.Imagen" alt="{{ producto.Nombre_Producto }}" style="width: 50px; height: 50px;">
-                          </td>
-                          <td>{{ producto.Nombre_Producto }}</td>
-                          <td>{{ producto.Cantidad }}</td>
-                          <td>₡{{ producto.Precio }}</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar ventana</button>
-          </div>
-      </div>
   </div>
-    
-</div>
 
+
+  <div *ngIf="pedidoSeleccionado" class="modal" tabindex="-1" style="display: flex;">
+    <div class="modal-contenido">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalles del Pedido #{{ pedidoSeleccionado.IdPedido }}</h5>
+      </div>
+      <div class="modal-body">
+        <table class="tabla-pedidos">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre del Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of pedidoSeleccionado.Productos">
+              <td>
+                <img [src]="producto.Imagen" alt="{{ producto.Nombre_Producto }}" style="width: 50px; height: 50px;">
+              </td>
+              <td>{{ producto.Nombre_Producto }}</td>
+              <td>{{ producto.Cantidad }}</td>
+              <td>₡{{ producto.Precio }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar ventana</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div *ngIf="mostrarModalConfirmacion" class="modal modal-confirmacion" tabindex="-1" style="display: flex;">
+    <div class="modal-contenido">
+      <h2><i class="fas fa-question-circle"></i> Confirmar cancelación</h2>
+      <p>¿Está seguro de que desea cancelar el pedido?</p>
+      <div class="modal-footer">
+        <button (click)="cancelarPedido()" class="btn btn-danger">Sí</button>
+        <button (click)="cancelarEliminacion()" class="btn btn-secondary">No</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="mostrarMensajeExito" class="modal modal-exito" tabindex="-1" style="display: flex;">
+    <div class="modal-contenido">
+      <h2><i class="fas fa-check-circle"></i> Éxito</h2>
+      <p>{{ mensajeExito }}</p>
+      <span (click)="cerrarModalExito()" class="close">&times;</span>
+    </div>
+  </div>
+
+  
+  <div *ngIf="mostrarErrorModal" class="modal modal-error" tabindex="-1" style="display: flex;">
+    <div class="modal-contenido">
+      <h2><i class="fas fa-exclamation-circle"></i> Error</h2> 
+      <p>{{ mensajeError }}</p>
+      <span (click)="cerrarModalError()" class="close">&times;</span>
+    </div>
+  </div>
 </main>

@@ -4,12 +4,14 @@ import { Router } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MenuComponent } from '../menu/menu.component';
 
-interface Producto {
+export interface Producto {
   idProducto: number;
   nombre_Producto: string;
   precio: number;
   imagen: string;
   estado: boolean;
+  cantidad_Stock: number;
+  
 }
 
 @Component({
@@ -25,6 +27,8 @@ export class MenuPrincipalComponent implements OnInit {
   nombreCliente: string | null = '';
   mostrarModal: boolean = false; 
   productoAgregado: Producto | null = null; 
+  mostrarModalError: boolean = false;  
+  mensajeModalError: string = ''; 
 
   constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -40,7 +44,7 @@ export class MenuPrincipalComponent implements OnInit {
           this.productos = data.filter(producto => producto.estado);
         },
         error: (err) => {
-          console.error('Error al cargar los productos:', err);
+          this.mensajeModalError = 'Ocurrió un error al cargar los productos'; 
         }
       });
   }
@@ -66,10 +70,16 @@ export class MenuPrincipalComponent implements OnInit {
 
   agregarAlCarrito(producto: Producto): void {
     const idCliente = localStorage.getItem('idCliente');
-
+  
     if (!idCliente) {
-      alert('Por favor, inicia sesión para agregar productos al carrito.');
-      this.router.navigate(['/inicio']);
+      this.mensajeModalError = 'Por favor, inicia sesión para agregar productos al carrito.';
+      this.mostrarModalError = true;
+  
+      
+      setTimeout(() => {
+        this.router.navigate(['/inicio']); 
+      }, 3000); 
+  
       return;
     }
 
@@ -95,9 +105,15 @@ export class MenuPrincipalComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error al agregar el producto al carrito:', err);
-          alert('Ocurrió un error al agregar el producto al carrito.');
+          this.mensajeModalError = 'Ocurrió un error al agregar el producto al carrito.'; 
+          this.mostrarModalError = true; 
         }
       });
+  }
+
+  cerrarModalError(): void {
+    this.mostrarModalError = false;
+    this.mensajeModalError = '';  
   }
 
   cerrarModal(): void {

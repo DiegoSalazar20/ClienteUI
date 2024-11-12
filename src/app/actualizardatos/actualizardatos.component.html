@@ -8,7 +8,7 @@
       <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required />
       <input type="text" [(ngModel)]="apellidos" name="apellidos" placeholder="Apellidos" required />
       <input type="text" [(ngModel)]="direccion" name="direccion" placeholder="Dirección" required />
-      <input type="text" [(ngModel)]="telefono" name="telefono" placeholder="Teléfono" required />
+      <input type="text" [(ngModel)]="telefono" name="telefono" (ngModelChange)="formatearTelefono()" maxlength="9" placeholder="Teléfono" required />
       <input type="email" [(ngModel)]="correo" name="correo" placeholder="Correo" required />
 
       <button class="botonAnimado" type="submit">Actualizar</button>
@@ -16,9 +16,31 @@
   </div>
 </div>
 
-<div *ngIf="mostrarModal" class="modal">
+<div *ngIf="mostrarConfirmacionFlag" class="modal modal-confirmacion">
   <div class="modal-content">
-    <span (click)="cerrarModal()" class="close">&times;</span>
-    <p>Datos actualizados exitosamente!</p>
+    <h2><i class="fas fa-question-circle"></i> Confirmar cancelación</h2>
+    <p>{{ mensajeConfirmacion }}</p>
+    <div class="modal-footer">
+      <button (click)="confirmarAccionModal()" class="btn btn-success">Sí</button>
+      <button (click)="mostrarConfirmacionFlag = false" class="btn btn-danger">No</button>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="mostrarModalExitoFlag" class="modal modal-exito">
+  <div class="modal-content">
+    <h2><i class="fas fa-check-circle"></i> Éxito</h2>
+    <p>{{ mensajeExito }}</p>
+    <span (click)="cerrarModalError()" class="close">&times;</span>
+  </div>
+</div>
+
+
+<div *ngIf="mostrarErrorModalFlag" class="modal modal-error">
+  <div class="modal-content">
+    <h2><i class="fas fa-exclamation-circle"></i> Error</h2> 
+    <p>{{ mensajeError }}</p>
+    <span (click)="cerrarModalError()" class="close">&times;</span>
   </div>
 </div>

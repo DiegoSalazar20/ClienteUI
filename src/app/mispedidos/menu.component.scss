@@ -196,6 +196,15 @@
   text-align: center;
 }
 
+.modal-exito {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.modal-error {
+  
+  color: red;
+}
 
 .modal-mensaje p {
   margin: 0;
@@ -216,32 +225,3 @@
   background-color: #555;
 }
 
-.modal-error h2 {
-  font-size: 1.3rem;
-  color: #e74c3c;
-  margin-bottom: 10px;
-}
-
-.modal-exito h2 {
-  font-size: 1.3rem;
-  color: #28a745;
-  margin-bottom: 10px;
-}
-
-.modal-confirmacion h2 {
-  font-size: 1.3rem;
-  color: #d1b921;
-  margin-bottom: 10px;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 1.5em;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover {
-  color: #333;
-}
