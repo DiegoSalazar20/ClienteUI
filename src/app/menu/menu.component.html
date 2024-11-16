@@ -1,18 +1,18 @@
 <header>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
   <nav class="menu-principal">
     <h1>Ferretería Electro Atlántida</h1>
-    <ul class="botones">
+    <button class="menu-hamburguesa" (click)="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul *ngIf="esCelular ? menuAbierto : true" class="botones">
       <li><button (click)="redirigir('/menuprincipal')">Ver productos</button></li>
       <li *ngIf="estaAutenticado">
         <button (click)="redirigir('/actualizardatos')">Actualizar datos</button>
       </li>
       <li *ngIf="estaAutenticado"><button (click)="redirigir('/mispedidos')">Mis Pedidos</button></li>
       <li *ngIf="estaAutenticado"><button (click)="abrirCarrito()"><i class="fas fa-shopping-cart"></i> Ver Carrito</button></li>
-
       <li>
-        
         <button (click)="estaAutenticado ? cerrarSesion('/menuprincipal') : redirigir('/inicio')" class="btn-sesion">
           <i class="fas" [ngClass]="estaAutenticado ? 'fa-sign-out-alt' : 'fa-sign-in-alt'"></i>
           {{ estaAutenticado ? 'Cerrar Sesión' : 'Iniciar Sesión' }}
@@ -21,6 +21,7 @@
     </ul>
   </nav>
 </header>
+
 
 <div *ngIf="mostrarCarrito" class="modal-carrito show">
   <div class="modal-content">

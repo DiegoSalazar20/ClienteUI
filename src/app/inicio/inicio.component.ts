@@ -35,7 +35,7 @@ export class InicioComponent {
             localStorage.setItem('Nombre', response.nombre.toString());
             this.router.navigate(['/menuprincipal']);
           } else {
-            alert('Cliente deshabilitado.');
+            this.mensajeError='Cliente deshabilitado'
           }
         }  else {
           this.mensajeError = 'Correo o contraseña incorrectas.';

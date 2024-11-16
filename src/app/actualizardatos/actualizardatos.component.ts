@@ -60,6 +60,7 @@ export class ActualizarDatosComponent implements OnInit {
 
     if (this.tieneNumerosOCaracteresEspeciales(this.nombre.trim())) camposInvalidos.push('Nombre');
     if (this.tieneNumerosOCaracteresEspeciales(this.apellidos.trim())) camposInvalidos.push('Apellidos');
+    if (!(this.validarCorreo(this.correo))) camposInvalidos.push('Correo electrónico');
 
     if (camposFaltantes.length > 0) {
       this.mostrarErrorModal('Faltan los siguientes datos por llenar: ' + camposFaltantes.join(', '));
@@ -77,6 +78,22 @@ export class ActualizarDatosComponent implements OnInit {
   tieneNumerosOCaracteresEspeciales(input: string): boolean {
     const regex = /[^a-zA-Z\s]/;
     return regex.test(input);
+  }
+
+  permitirSoloNumeros(event: KeyboardEvent): boolean {
+    const tecla = event.key;
+  
+    if (/^[0-9]$/.test(tecla) || ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(tecla)) {
+      return true;
+    }
+
+    event.preventDefault();
+    return false;
+  }
+
+  validarCorreo(correo: string): boolean {
+    const correoRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return correoRegex.test(correo);
   }
 
   cargarDatos(cedula: string): void {

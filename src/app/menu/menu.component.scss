@@ -245,3 +245,69 @@
 .close:hover {
   color: #333;
 }
+
+/* Estilos básicos del menú */
+.menu-principal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f7f8c9;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.menu-principal h1 {
+  font-size: 1.5rem;
+  color: #3b260d;
+}
+
+/* Botón hamburguesa */
+.menu-hamburguesa {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #3b260d;
+  cursor: pointer;
+}
+
+.botones {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu-hamburguesa {
+    display: block;
+  }
+
+  .botones {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #f7f8c9;
+    position: absolute;
+    top: 60px;
+    left: 0;
+  }
+
+  .botones.menu-visible {
+    display: flex;
+  }
+
+  .botones button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 15px;
+    border-top: 1px solid #ddd;
+  }
+
+}

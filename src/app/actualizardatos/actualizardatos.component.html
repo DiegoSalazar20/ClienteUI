@@ -8,7 +8,7 @@
       <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required />
       <input type="text" [(ngModel)]="apellidos" name="apellidos" placeholder="Apellidos" required />
       <input type="text" [(ngModel)]="direccion" name="direccion" placeholder="Dirección" required />
-      <input type="text" [(ngModel)]="telefono" name="telefono" (ngModelChange)="formatearTelefono()" maxlength="9" placeholder="Teléfono" required />
+      <input type="text" [(ngModel)]="telefono" name="telefono" (ngModelChange)="formatearTelefono()" (keydown)="permitirSoloNumeros($event)" maxlength="9" placeholder="Teléfono" required />
       <input type="email" [(ngModel)]="correo" name="correo" placeholder="Correo" required />
 
       <button class="botonAnimado" type="submit">Actualizar</button>

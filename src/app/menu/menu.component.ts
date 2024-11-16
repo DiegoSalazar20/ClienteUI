@@ -44,15 +44,31 @@ export class MenuComponent {
   mensajeError: string = '';
 
   mensajeCancelado: String = '';
+  menuAbierto = false;
+  esCelular: boolean = false;
 
 
   constructor(private router: Router, private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { 
     this.verificarSesion(); 
+    this.checkScreenSize();
+    window.addEventListener('resize', () => {
+      this.checkScreenSize();
+    });
   }
 
   mostrarError(mensaje: string): void {
     this.mensajeError = mensaje;
     this.mostrarErrorModal = true;
+  }
+
+  toggleMenu(): void {
+    if (this.esCelular) {
+      this.menuAbierto = !this.menuAbierto;
+    }
+  }
+
+  checkScreenSize(): void {
+    this.esCelular = window.innerWidth <= 768; 
   }
 
   cerrarModalError(): void {
@@ -74,6 +90,7 @@ export class MenuComponent {
 
   abrirCarrito(): void {
     this.mostrarCarrito = true;
+    this.menuAbierto=false;
     this.cargarCarrito();
   }
 
@@ -341,4 +358,5 @@ export class MenuComponent {
   cancelarPedidoDesdeModal(): void {
     this.mostrarModalConfirmacion = false;
   }
+
 }

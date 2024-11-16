@@ -105,6 +105,9 @@ export class RegistroComponent {
 
     if (this.tieneNumerosOCaracteresEspeciales(this.nombre.trim())) camposInvalidos.push('Nombre');
     if (this.tieneNumerosOCaracteresEspeciales(this.apellidos.trim())) camposInvalidos.push('Apellido');
+
+    if (!(this.validarCaracteresEspeciales(this.direccion.trim()))) camposInvalidos.push('Dirección');
+
     if (!(this.validarTelefono(this.telefono))) camposInvalidos.push('Teléfono');
     if (!(this.validarCorreo(this.correo))) camposInvalidos.push('Correo electrónico');
 
@@ -124,6 +127,11 @@ export class RegistroComponent {
     return resultado;
   }
 
+  validarCaracteresEspeciales(entrada: string): boolean {
+    const regex = /[!@#$%|^&*_()[\]{};:"<>¿?\/]/;
+    return !regex.test(entrada);
+  }
+
   validarTelefono(telefono: string): boolean {
     const telefonoRegex = /^\d{4}-\d{4}$/;
     return telefonoRegex.test(telefono);
@@ -132,6 +140,17 @@ export class RegistroComponent {
   validarCorreo(correo: string): boolean {
     const correoRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return correoRegex.test(correo);
+  }
+
+  permitirSoloNumeros(event: KeyboardEvent): boolean {
+    const tecla = event.key;
+  
+    if (/^[0-9]$/.test(tecla) || ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(tecla)) {
+      return true;
+    }
+
+    event.preventDefault();
+    return false;
   }
 
   tieneNumerosOCaracteresEspeciales(input: string): boolean {
